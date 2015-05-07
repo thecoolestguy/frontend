@@ -63,5 +63,10 @@ export default Ember.Component.extend({
       this.get('learningMaterial').set('notes', value);
       this.get('learningMaterial').save();
     },
+    //change the learning material description value
+    changeDescription: function(value) {
+      this.get('learningMaterial').set('description', value);
+      this.get('learningMaterial').save();
+    }
   }
 });

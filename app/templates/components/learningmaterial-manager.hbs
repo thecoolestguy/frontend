@@ -1,62 +1,96 @@
-<div class="inline-label-data-block">
-  <label>{{t "general.required"}}:</label>
-  <div class='required'>{{inplace-boolean value=learningMaterial.required save='changeRequired'}}</div>
-</div><br />
-<div class="inline-label-data-block">
-  <label>{{t "learningMaterials.showNotesToStudents"}}:</label>
-  <div class='publicnotes'>{{inplace-boolean value=learningMaterial.publicNotes save='changePublicNotes'}}</div>
-</div><br />
-<div class="inline-label-data-block">
-  <label>{{t "learningMaterials.showNotesToStudents"}}:</label>
-  <div class='notes'>{{inplace-textarea value=learningMaterial.notes save='changeNotes'}}</div>
-</div><br />
-<label>{{t 'learningMaterials.displayName'}}
-  <span class='displayname'>{{learningMaterial.learningMaterial.title}}</span>
-</label> <br />
-<label>{{t 'learningMaterials.owner'}}
-  <span class='owninguser'>{{learningMaterial.learningMaterial.owningUser.fullName}}</span>
-</label> <br />
-<label>{{t 'learningMaterials.contentAuthor'}}
-  <span class='originalauthor'>{{learningMaterial.learningMaterial.originalAuthor}}</span>
-</label> <br />
-<div class="inline-label-data-block">
-  <label>{{t "learningMaterials.status"}}:</label>
-  <div class='status'>
+<div class="form-container">
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.displayName'}}:</label>
+    <div class="form-data"><span class='displayname'>{{learningMaterial.learningMaterial.title}}</span></div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.status'}}:</label>
+    <div class="form-data status">
     {{inplace-select
       value=learningMaterial.learningMaterial.status.id
       options=statusOptions
       save='changeStatus'
     }}
+    </div>
   </div>
-</div><br />
-<label>{{t 'learningMaterials.userRole'}}
-  <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
-</label> <br />
-<label>{{t 'general.description'}}
-  <span class='description'>{{learningMaterial.learningMaterial.description}}</span>
-</label> <br />
-
-{{#if isFile}}
-  <label>{{t 'learningMaterials.copyrightPermission'}}
-    <span class='copyrightpermission'>{{learningMaterial.learningMaterial.copyrightPermission}}</span>
-  </label> <br />
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.required'}}:</label>
+    <div class="form-data required">
+      {{inplace-boolean value=learningMaterial.required save='changeRequired'}}
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.notes'}}:</label>
+    <div class="form-data notes">
+      {{inplace-textarea value=learningMaterial.notes save='changeNotes'}}
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.showNotesToStudents'}}:</label>
+    <div class="form-data publicnotes">
+      {{inplace-boolean value=learningMaterial.publicNotes save='changePublicNotes'}}
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.owner'}}:</label>
+    <div class="form-data">
+      <span class='owninguser'>{{learningMaterial.learningMaterial.owningUser.fullName}}</span>
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.contentAuthor'}}:</label>
+    <div class="form-data">
+      <span class='originalauthor'>{{learningMaterial.learningMaterial.originalAuthor}}</span>
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.userRole'}}:</label>
+    <div class="form-data">
+      <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
+    </div>
+  </div>
+  <div class="form-col-12">
+    <label class="form-label">{{t 'general.description'}}:</label>
+    <div class="form-data">
+      <span class='description'>{{inplace-textarea value=learningMaterial.learningMaterial.description save='changeDescription'}}</span>
+    </div>
+  </div>
+  {{#if isFile}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.copyrightPermission'}}:</label>
+    <div class="form-data">
+      <span class='copyrightpermission'>{{learningMaterial.learningMaterial.copyrightPermission}}</span>
+    </div>
+  </div>
   {{#unless learningMaterial.copyrightPermission}}
-    <label>{{t 'learningMaterials.copyrightRationale'}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
+    <div class="form-data">
       <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
-    </label> <br />
+    </div>
+  </div>
   {{/unless}}
-{{/if}}
-
-{{#if isCitation}}
-  <label>{{t 'learningMaterials.citation'}}
-    <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
-  </label>
-{{/if}}
-
-{{#if isLink}}
-  <label>{{t 'learningMaterials.link'}}
-    <span class='link'>{{learningMaterial.learningMaterial.link}}</span>
-  </label> <br />
-{{/if}}
-<label>{{t 'general.mesh'}}</label>
-{{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}
+  {{/if}}
+  {{#if isCitation}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
+    <div class="form-data">
+      <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
+    </div>
+  </div>
+  {{/if}}
+  {{#if isLink}}
+  <div class="form-col-12">
+    <label class="form-label">{{t 'learningMaterials.link'}}</label>
+    <div class="form-data">
+      <span class='link'>{{learningMaterial.learningMaterial.link}}</span>
+    </div>
+  </div>
+  {{/if}}
+  <div class="form-col-12">
+    <label>{{t 'general.mesh'}}:</label>
+    <div>
+      {{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}
+    </div>
+  </div>
+</div> <!-- /.form-container -->
