@@ -18,6 +18,10 @@
       input[type=text], textarea {
         width: 75%;
       }
+
+      .ember-select {
+
+      }
     }
     
     /* handle a the submit button alignment for a  100%-wide 1-column form or 50%-wide 2 column form */
@@ -112,7 +116,13 @@
     }
   }
   
+  //for all 'label' tags within the context of a form container, make them bold
+  label {
+    font-weight: bold;
+  } 
+
 }
+
 
 /* put the universal (non parent-dependent) styles below here */
 .form-label, 
