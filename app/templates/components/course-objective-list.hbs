@@ -9,6 +9,7 @@
   <tbody>
     {{#each objective in sortedObjectives}}
     <tr id="objective-{{objective.id}}">
+    {{#if course.objectives.isFulfilled}}
       <td class='text-left text-top' colspan=2>
         {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
       </td>
@@ -47,6 +48,11 @@
           <button class='add' {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
         {{/if}}
       </td>
+      {{else}}
+        <td colspan="3" class="show-loader">
+          {{loading-part}}
+        </td>
+      {{/if}}
     </tr>
     {{/each}}
   </tbody>
