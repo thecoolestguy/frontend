@@ -28,9 +28,3 @@
     @include animation(pulse 2.2s infinite ease-in-out);
   }
 }
-
-/* set the smaller size for the line item loading animations */
-.show-loader svg {
-  height: 120px;
-  width: auto;
-}

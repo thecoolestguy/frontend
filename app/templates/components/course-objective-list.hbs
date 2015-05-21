@@ -7,53 +7,55 @@
     </tr>
   </thead>
   <tbody>
-    {{#each objective in sortedObjectives}}
-    <tr id="objective-{{objective.id}}">
     {{#if course.objectives.isFulfilled}}
-      <td class='text-left text-top' colspan=2>
-        {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
-      </td>
-      <td class='text-left text-top'>
-        {{#if objective.hasParents}}
-          {{#each parent in objective.parents}}
-            {{#if course.hasMultipleCohorts}}
-              <strong>
-                {{parent.programYear.program.title}}&nbsp
-                {{parent.programYear.cohort.displayTitle}}
-              </strong>
-              <br />
-            {{/if}}
-            <a href='#' {{action 'manageParents' objective}}>
-              {{parent.textTitle}}
-            </a>
-            {{#if parent.competency}}
-              ({{parent.competency.title}})
-            {{/if}}
-            <br />
-          {{/each}}
-        {{else}}
-          <button class='add' {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
-        {{/if}}
-      </td>
-      <td class='text-left text-top'>
-        {{#if objective.meshDescriptors.length}}
-          <ul>
-            <a href='#' {{action 'manageDescriptors' objective}}>
-              {{#each descriptor in objective.meshDescriptors}}
-                <li>{{descriptor.title}}</li>
-              {{/each}}
-            </a>
-          </ul>
-        {{else}}
-          <button class='add' {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
-        {{/if}}
-      </td>
-      {{else}}
-        <td colspan="3" class="show-loader">
-          {{loading-part}}
+      {{#each objective in sortedObjectives}}
+      <tr id="objective-{{objective.id}}">
+        <td class='text-left text-top' colspan=2>
+          {{inplace-textarea value=objective.title save='changeObjectiveTitle' condition=objective.id}}
         </td>
-      {{/if}}
+        <td class='text-left text-top'>
+          {{#if objective.hasParents}}
+            {{#each parent in objective.parents}}
+              {{#if course.hasMultipleCohorts}}
+                <strong>
+                  {{parent.programYear.program.title}}&nbsp
+                  {{parent.programYear.cohort.displayTitle}}
+                </strong>
+                <br />
+              {{/if}}
+              <a href='#' {{action 'manageParents' objective}}>
+                {{parent.textTitle}}
+              </a>
+              {{#if parent.competency}}
+                ({{parent.competency.title}})
+              {{/if}}
+              <br />
+            {{/each}}
+          {{else}}
+            <button class='add' {{action 'manageParents' objective}}>{{t 'general.addNew'}}</button>
+          {{/if}}
+        </td>
+        <td class='text-left text-top'>
+          {{#if objective.meshDescriptors.length}}
+            <ul>
+              <a href='#' {{action 'manageDescriptors' objective}}>
+                {{#each descriptor in objective.meshDescriptors}}
+                  <li>{{descriptor.title}}</li>
+                {{/each}}
+              </a>
+            </ul>
+          {{else}}
+            <button class='add' {{action 'manageDescriptors' objective}}>{{t 'general.addNew'}}</button>
+          {{/if}}
+        </td>
+      </tr>
+      {{/each}}
+    {{else}}
+    <tr>
+      <td colspan="3">
+        {{loading-part}}
+      </td>
     </tr>
-    {{/each}}
+    {{/if}}
   </tbody>
 </table>
