@@ -25,18 +25,10 @@
   .resultslist-list {
     @include span-columns(12 of 12);
     @include pad();
-    tbody tr {
 
-      &:hover {
-        background-color: rgba(239, 251, 255, .8);
-      }
-
-      &.active-background,
-      &.active-background:hover {
-        background-color: rgba(239, 251, 255, .8);
-      }
-    }
-     
+    table {
+      border-collapse: collapse;
+    } 
 
     thead tr {
       background-color: $header-grey;  
@@ -57,10 +49,12 @@
 
       tbody tr {
         cursor: pointer;
+        border-top: 1px dotted transparent;
+        border-bottom: 1px dotted transparent;
         
         &:hover {
           border-top:1px dotted $header-blue;
-             border-bottom:1px dotted $header-blue;
+          border-bottom:1px dotted $header-blue;
         }
       }  
      
