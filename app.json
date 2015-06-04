@@ -1,14 +1,9 @@
 {
   "name": "ilios-frontend",
-  "description": "",
+  "description": "Demo of ilios ember application",
   "scripts": {},
   "env": {
-    "NPM_CONFIG_LOGLEVEL": {
-      "required": true
-    },
-    "NPM_CONFIG_PRODUCTION": {
-      "required": true
-    }
+    "BUILDPACK_URL": "https://github.com/tonycoco/heroku-buildpack-ember-cli.git"
   },
   "addons": []
 }

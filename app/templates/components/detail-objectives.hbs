@@ -1,6 +1,8 @@
 <section class='detail-block'>
   <div class='detail-title'>
-    {{t 'general.objectives'}} ({{subject.objectives.length}})
+    {{#unless isManaging}}
+      {{t 'general.objectives'}} ({{subject.objectives.length}})
+    {{/unless}}
     {{#if isManagingParents}}
       <span class='detail-specific-title'>
         {{t 'courses.objectiveParentTitle'}}
@@ -19,15 +21,15 @@
   </div>
 
   <div class='detail-actions'>
-    {{#if isManaging}}
+    {{#liquid-if isManaging class='horizontal'}}
       <button class='bigadd' {{action 'save'}}>{{fa-icon 'check'}}</button>
       <button class='bigcancel' {{action 'cancel'}}>{{fa-icon 'undo'}}</button>
     {{else}}
       <button class='add' {{action 'addObjective'}}>{{t 'general.addNew'}}</button>
-    {{/if}}
+    {{/liquid-if}}
   </div>
   <div class='detail-content'>
-    {{#if newObjectives.length}}
+    {{#liquid-if newObjectives.length class='vertical'}}
       <section class='resultslist-new'>
         {{#each objective in newObjectives}}
           <section class='newobjective'>
@@ -36,12 +38,12 @@
               {{textarea value=objective.title}}
             </label>
             <br />
-            <button class='cancel text' {{action 'removeNewObjective' objective}}>{{t 'general.cancel'}}</button>
             <button class='done text' {{action 'saveNewObjective' objective}}>{{t 'general.done'}}</button>
+            <button class='cancel text' {{action 'removeNewObjective' objective}}>{{t 'general.cancel'}}</button>
           </section>
         {{/each}}
       </section>
-    {{/if}}
+    {{/liquid-if}}
     {{#liquid-unless isManaging class="horizontal"}}
       {{#if isCourse}}
         {{course-objective-list

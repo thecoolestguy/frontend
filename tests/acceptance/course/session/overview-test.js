@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/course/1/session/1';
+var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Overview', {
   beforeEach: function() {
     application = startApp();
@@ -44,7 +44,7 @@ test('check fields', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     assert.equal(getElementText(find('.sessiontype div', container)), getText(fixtures.selectedSessionType.title));
     assert.equal(getElementText(find('.sessiondescription .content', container)), getText(fixtures.sessionDescription.description));
@@ -63,7 +63,7 @@ test('check remove ilm', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     assert.equal(find('.sessionilmhours', container).length, 1);
     assert.equal(find('.sessionilmduedate', container).length, 1);
@@ -88,12 +88,13 @@ test('check add ilm', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     var container = find('.session-overview');
     click(find('.independentlearningcontrol input', container));
     andThen(function(){
       assert.equal(find('.sessionilmhours', container).length, 1);
       assert.equal(find('.sessionilmduedate', container).length, 1);
+      assert.equal(find('.sessionassociatedgroups', container).length, 0);
       assert.equal(getElementText(find('.sessionilmhours .content', container)), 1);
     });
   });
@@ -110,7 +111,7 @@ test('change ilm hours', function(assert) {
   visit(url);
 
   andThen(function() {
-    assert.equal(currentPath(), 'course.session');
+    assert.equal(currentPath(), 'course.session.index');
     assert.equal(find('.sessionilmhours', container).length, 1);
     var container = find('#session-details .sessionilmhours');
     assert.equal(getElementText(find('.content', container)), ilmSession.hours);
@@ -234,7 +235,7 @@ test('change special attire', function(assert) {
   });
 });
 
-test('change special equiptment', function(assert) {
+test('change special equipment', function(assert) {
   var session = server.create('session', {
     course: 1,
     sessionType: 2
@@ -242,10 +243,10 @@ test('change special equiptment', function(assert) {
   visit(url);
   andThen(function() {
     var container = find('.session-overview');
-    assert.ok(!find('.sessionsepcialequiptment .editinplace input', container).is(':checked'));
-    click(find('.sessionsepcialequiptment .editinplace .control', container));
+    assert.ok(!find('.sessionspecialequipment .editinplace input', container).is(':checked'));
+    click(find('.sessionspecialequipment .editinplace .control', container));
     andThen(function(){
-      assert.ok(find('.sessionsepcialequiptment .editinplace input', container).is(':checked'));
+      assert.ok(find('.sessionspecialequipment .editinplace input', container).is(':checked'));
     });
   });
 });

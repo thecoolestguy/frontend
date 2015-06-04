@@ -17,6 +17,12 @@ module.exports = function(environment) {
       'style-src': "'self'",
       'media-src': "'self'"
     },
+    flashMessageDefaults: {
+      timeout: 2000,
+      extendTimeout: 4000,
+      types: [ 'success', 'warning', 'info', 'alert' ],
+      injectionFactories: []
+    },
     EmberENV: {
       FEATURES: {
         // Here you can enable experimental features on an ember canary build
@@ -63,9 +69,12 @@ module.exports = function(environment) {
     ENV.contentSecurityPolicy['style-src'] += " 'unsafe-inline'";
 
   }
-
+  //production is what we use to deploy to heroku for demo purposes
+  //this is not really production, but its hard to change the name
   if (environment === 'production') {
-
+    ENV['ember-cli-mirage'] = {
+      enabled: true
+    };
   }
 
   return ENV;

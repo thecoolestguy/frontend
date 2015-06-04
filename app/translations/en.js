@@ -13,6 +13,7 @@ var general = {
   'add': 'Add',
   'addNew': 'Add New',
   'none': 'None',
+  'close': 'Close',
   'published': 'Published',
   'notPublished': 'Not Published',
   'scheduled': 'Scheduled',
@@ -81,6 +82,10 @@ var general = {
   'singleDay': 'Single Day',
   'multiDay': 'Multi Day',
   'classOf': 'Class of {{year}}',
+  'findInstructorOrGroup': 'Find Instructor or Group',
+  'selected': 'Selected',
+  'available': 'Available',
+  'savedSuccessfully': 'Saved Successfully',
 };
 translations.general = general;
 
@@ -91,14 +96,19 @@ var programs = {
   'new': 'New Program',
   'confirmRemove': 'Are you sure you want to delete this program, with {{programYearCount}} program years and {{courseCount}} courses? This action will remove all courses and activities related to this program, and cannot be undone.',
   'backToPrograms': 'Back to Programs',
+  'backToProgramYears': 'Back to Program Years',
   'programTitleShort': 'Program Title (short)',
   'durationInYears': 'Duration (in Years)',
   'noProgramYears': 'There are no program years in this program',
-  'matriculationYear': 'Matriculation year',
+  'matriculationYear': 'Matriculation Year',
   'competenciesManageTitle': 'Manage Competencies',
   'missingCompetenciesMessage': 'Please add at least one competency to this program year.',
   'currentCompetency': 'Current Competency',
   'objectiveCompetencyManagerTitle': 'Select Objective Competency',
+  'stewardingSchoolsAndDepartments': 'Stewarding Schools and Departments',
+  'stewardsManageTitle': 'Manage Stewards',
+  'noUnselectedCompetencies': 'There are no unselected competencies',
+  'noSelectedCompetencies': 'There are no selected competencies',
 };
 translations.programs = programs;
 
@@ -143,6 +153,15 @@ var learnerGroups = {
   'confirmRemove': 'Are you sure you want to delete this learner group, with {{learnerCount}} learners and {{subgroupCount}} subgroups? This action cannot be undone.',
   'members': 'Members',
   'subgroups': 'Subgroups',
+  'defaultInstructors': 'Default Instructors',
+  'defaultLocation': 'Default Location',
+  'removeLearnerToCohort': 'Remove Learner to {{cohort}}',
+  'switchLearnerToGroup': 'Switch Learner to {{{group}}}',
+  'associatedCourses': 'Associated Courses',
+  'noSubgroups': 'There are no subgroups in this learner group',
+  'topGroupMembersNotInGroup': '{{groupTitle}} Members NOT in this Subgroup',
+  'cohortMembersNotInGroup': 'Cohort Members NOT assigned to {{groupTitle}} ',
+  'notInThisGroup': 'Not in this group',
 };
 translations.learnerGroups = learnerGroups;
 
@@ -182,6 +201,7 @@ var courses = {
   'missingCohortMessage': 'Please add at least one cohort to this course.',
   'confirmRemove': 'Are you sure you want to delete this course, with {{publishedOfferingCount}} published offerings? This action will remove all sessions and offerings for this course, and cannot be undone.',
   'meshSearchPlaceholder': 'Search MeSH',
+  'meshManageTitle': 'Manage MeSH',
   'topicsManageTitle': 'Manage Topics',
   'clerkshipType': 'Clerkship Type',
   'notAClerkship': 'Not a Clerkship',
@@ -191,8 +211,8 @@ var courses = {
   'learnerGroupsManageTitle': 'Manage Learner Groups',
   'availalbeLearnerGroups': 'Available Learner Groups',
   'noAvailalbeLearnerGroups': 'There are no unselected learner groups in this cohort',
-  'availalbeInstructorGroups': 'Available Instructor Groups',
-  'noAvailalbeInstructorGroups': 'There are no unselected instructor groups in this school',
+  'instructors': 'Instructors',
+  'instructorsManageTitle': 'Manage Instructors',
 };
 translations.courses = courses;
 
@@ -224,6 +244,7 @@ translations.sessions = sessions;
 var offerings = {
   'calendarOn': 'Calendar On',
   'calendarOff': 'Calendar Off',
+  'confirmRemove': 'Are you sure you want to delete this offering with {{learnerGroupCount}} learner groups? This action cannot be undone.',
 };
 translations.offerings = offerings;
 
@@ -272,6 +293,11 @@ var publish = {
   'unPublishProgram': 'UnPublish Program',
   'publishProgramYear': 'Publish Program Year',
   'unPublishProgramYear': 'UnPublish Program Year',
+  message: {
+    'publish': 'Published Successfully',
+    'schedule': 'Scheduled Successfully',
+    'unPublish': 'UnPublished Successfully',
+  }
 };
 translations.publish = publish;
 

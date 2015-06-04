@@ -62,35 +62,40 @@
       <span class='copyrightpermission'>{{learningMaterial.learningMaterial.copyrightPermission}}</span>
     </div>
   </div>
-  {{#unless learningMaterial.copyrightPermission}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.copyrightRationale'}}:</label>
-    <div class="form-data">
+</div><br />
+<label>{{t 'learningMaterials.userRole'}}
+  <span class='userrole'>{{learningMaterial.learningMaterial.userRole.title}}</span>
+</label> <br />
+<label>{{t 'general.description'}}
+  <span class='description'>{{learningMaterial.learningMaterial.description}}</span>
+</label> <br />
+
+{{#if isFile}}
+  <label>{{t 'learningMaterials.copyrightPermission'}}
+    {{#if learningMaterial.learningMaterial.copyrightPermission}}
+      <span class='copyrightpermission add'>{{t 'general.yes'}}</span>
+    {{else}}
+      <span class='copyrightpermission remove'>{{t 'general.no'}}</span>
+    {{/if}}
+  </label> <br />
+  {{#unless learningMaterial.learningMaterial.copyrightPermission}}
+    <label>{{t 'learningMaterials.copyrightRationale'}}
       <span class='copyrightrationale'>{{learningMaterial.learningMaterial.copyrightRationale}}</span>
     </div>
   </div>
   {{/unless}}
-  {{/if}}
-  {{#if isCitation}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.citation'}}:</label>
-    <div class="form-data">
-      <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
-    </div>
-  </div>
-  {{/if}}
-  {{#if isLink}}
-  <div class="form-col-12">
-    <label class="form-label">{{t 'learningMaterials.link'}}</label>
-    <div class="form-data">
-      <span class='link'>{{learningMaterial.learningMaterial.link}}</span>
-    </div>
-  </div>
-  {{/if}}
-  <div class="form-col-12">
-    <label>{{t 'general.mesh'}}:</label>
-    <div>
-      {{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}
-    </div>
-  </div>
-</div> <!-- /.form-container -->
+{{/if}}
+
+{{#if isCitation}}
+  <label>{{t 'learningMaterials.citation'}}
+    <span class='citation'>{{learningMaterial.learningMaterial.citation}}</span>
+  </label> <br />
+{{/if}}
+
+{{#if isLink}}
+  <label>{{t 'learningMaterials.link'}}
+    <span class='link'>{{learningMaterial.learningMaterial.link}}</span>
+  </label> <br />
+{{/if}}
+<label>{{t 'general.mesh'}}</label>
+{{mesh-manager add='addMeshTerm' remove='removeMeshTerm' terms=learningMaterial.meshDescriptors}}

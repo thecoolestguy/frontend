@@ -6,7 +6,7 @@
       <h2>{{session.title}}</h2>
     {{/if}}
   </span>
-  <span class ='actions'>
+  <span class ='header-actions'>
     {{#action-menu title=menuTitle icon=menuIcon classNameBindings='publicationStatus :publication-menu :session-publication-menu :right-edge'}}
       {{#if showAsIs}}
         <li class='danger' {{action 'publish'}}>{{t 'publish.publishAsIs'}}</li>
@@ -15,7 +15,7 @@
         <li class='good' {{action 'publish'}}>{{t 'publish.publishSession'}}</li>
       {{/if}}
       {{#if showReview}}
-        {{#link-to 'course.sessionpublicationcheck' course session}}
+        {{#link-to 'session.publicationCheck' course session}}
           <li class='good' >{{t 'publish.reviewMissingItems' countBinding='session.allPublicationIssuesLength'}}</li>
         {{/link-to}}
       {{/if}}
@@ -47,11 +47,11 @@
       <label class="form-label">{{t "sessions.supplementalCurriculum"}}:</label>
       <div class="form-data">{{inplace-boolean value=session.supplemental save='changeSupplemental'}}</div>
     </div>
-    <div class="form-col-6-left sessionspecialattire">
+    <div class="form-col-6 sessionspecialattire">
       <label class="form-label">{{t "sessions.specialAttireRequired"}}:</label>
       <div class="form-data">{{inplace-boolean value=session.attireRequired save='changeSpecialAttire'}}</div>
     </div>
-    <div class="form-col-6-right sessionsepcialequiptment">
+    <div class="form-col-6 sessionspecialequipment">
       <label class="form-label">{{t "sessions.specialEquipmentRequired"}}:</label>
       <div class="form-data">{{inplace-boolean value=session.equipmentRequired save='changeSpecialEquipment'}}</div>
     </div>
@@ -73,21 +73,23 @@
       <label class="form-label">{{t "general.description"}}:</label>
       <div class="form-data">{{inplace-textarea value=session.sessionDescription.description save='changeDescription'}}</div>
     </div>
-    <div class="form-col-12">
-      <label>{{t "general.associatedGroups"}}:</label>
-      <div>
-      {{#if session.associatedLearnerGroups.isFulfilled}}
-        <span>
-          {{#each group in session.associatedLearnerGroups}}
-          {{group.title}},
-          {{else}}
-            {{t 'general.none'}}
-          {{/each}}
-        </span>
-      {{else}}
-        {{loading-part}}
-      {{/if}}
+    {{#unless session.isIndependentLearning}}
+      <div class="form-col-12 sessionassociatedgroups">
+        <label>{{t "general.associatedGroups"}}:</label>
+        <div>
+        {{#if session.associatedLearnerGroups.isFulfilled}}
+          <span>
+            {{#each group in session.associatedLearnerGroups}}
+              {{group.title}},
+            {{else}}
+              {{t 'general.none'}}
+            {{/each}}
+          </span>
+        {{else}}
+          {{loading-part}}
+        {{/if}}
+        </div>
       </div>
-    </div>
+    {{/unless}}
   </div>
 </section>

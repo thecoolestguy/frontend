@@ -11,14 +11,29 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   placeholderValueTranslation: 'sessions.titleFilterPlaceholder',
   //in order to delay rendering until a user is done typing debounce the title filter
   debouncedFilter: '',
+  willInsertElement: function(){
+    Ember.set(this, 'newSessions', []);
+  },
   watchFilter: function(){
     Ember.run.debounce(this, this.setFilter, 500);
   }.observes('filter'),
   setFilter: function(){
     this.set('debouncedFilter', this.get('filter'));
   },
-  filteredContent: function(){
+  proxiedSessions: Ember.computed('sessions.@each', function() {
     var sessions = this.get('sessions');
+    if(sessions == null){
+      return Ember.A();
+    }
+    return sessions.map(session => {
+      return Ember.ObjectProxy.create({
+        content: session,
+        expandOfferings: false
+      });
+    });
+  }),
+  filteredContent: function(){
+    var sessions = this.get('proxiedSessions');
     if(sessions == null){
       return Ember.A();
     }
@@ -41,7 +56,7 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
       return (matchedSearchTerms === filterExpressions.length);
     });
     return filtered.sortBy('title');
-  }.property('sessions.@each.searchString', 'debouncedFilter'),
+  }.property('proxiedSessions.@each.searchString', 'debouncedFilter'),
   setSessionTypes: function(){
     var self = this;
     var course = this.get('course');
@@ -57,21 +72,33 @@ export default Ember.Component.extend(Ember.I18n.TranslateableProperties, {
   }.observes('course', 'course.owningSchool', 'course.owningSchool.sessionTypes.@each').on('init'),
   actions: {
     addNewSession: function(){
-      var session = this.get('store').createRecord('session');
-      this.get('newSessions').addObject(session);
+      var sessionProxy = Ember.ObjectProxy.create({
+        isSaved: false,
+        content: this.get('store').createRecord('session')
+      });
+
+      this.get('newSessions').addObject(sessionProxy);
     },
     saveNewSession: function(newSession){
-      var self = this;
-      this.get('newSessions').removeObject(newSession);
+      let sessionProxy = this.get('newSessions').find(proxy => {
+        return proxy.get('content') === newSession;
+      });
       var course = this.get('course');
       newSession.set('course', course);
-      newSession.save().then(function(savedSession){
+      newSession.save().then(savedSession => {
         course.get('sessions').addObject(savedSession);
-        self.sendAction('openSession', course, savedSession);
+        sessionProxy.set('content', savedSession);
+        sessionProxy.set('isSaved', true);
       });
     },
     removeNewSession: function(newSession){
-      this.get('newSessions').removeObject(newSession);
+      let sessionProxy = this.get('newSessions').find(proxy => {
+        return proxy.get('content') === newSession;
+      });
+      this.get('newSessions').removeObject(sessionProxy);
     },
+    toggleExpandedOffering(sessionProxy){
+      sessionProxy.set('expandOfferings', !sessionProxy.get('expandOfferings'));
+    }
   }
 });

@@ -1,5 +1,5 @@
 <div class="live-search">
-  {{search-box value=searchTerms placeholder=placeholder}}
+  {{search-box value=searchTerms placeholder=placeholder search='search'}}
   {{#if searching}}
     <ul class='results'>
       <li>{{t 'general.currentlySearchingPrompt'}}</li>
@@ -10,13 +10,20 @@
         <li>{{t 'general.moreInputRequiredPrompt'}}</li>
       </ul>
     {{else}}
-      {{#if sortedSearchResults.length}}
+      {{#if results.length}}
         <ul class='results'>
-          {{#each user in sortedSearchResults}}
-            <li {{action 'addUser' user}}{{bind-attr class='user.isActive:active:inactive'}}>
-              <div class='livesearch-user-name'>{{user.fullName}}</div>
-              <div class='livesearch-user-email'>{{user.email}}</div>
-            </li>
+          {{#each proxy in results}}
+            {{#if proxy.isUser}}
+              <li {{action 'addUser' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
+                <div class='livesearch-user-name'>{{proxy.fullName}}</div>
+                <div class='livesearch-user-email'>{{proxy.email}}</div>
+              </li>
+            {{/if}}
+            {{#if proxy.isInstructorGroup}}
+              <li {{action 'addInstructorGroup' proxy.content}}{{bind-attr class='proxy.isActive:active:inactive'}}>
+                {{proxy.title}}
+              </li>
+            {{/if}}
           {{/each}}
         </ul>
       {{else}}

@@ -8,7 +8,7 @@ import startApp from 'ilios/tests/helpers/start-app';
 
 var application;
 var fixtures = {};
-var url = '/course/1/session/1';
+var url = '/courses/1/sessions/1';
 module('Acceptance: Session - Offerings', {
   beforeEach: function() {
     application = startApp();
@@ -223,10 +223,17 @@ test('create new offering', function(assert) {
     fillIn(find('.offering-edit-end-time input', container), '03:23');
     fillIn(find('.offering-edit-room input', container), 'testing palace');
     click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
-    click('.offering-edit-instructorgroups li:eq(0)', container);
-    fillIn(find('.offering-edit-instructors input', container), '0 guy').then(function(){
-      click(find('.offering-edit-instructors .results li:eq(0)', container));
-      click(find('.bigadd', container));
+    let input = find('.search-box input', container);
+    fillIn(input, 'guy');
+    click('span.search-icon', container).then(()=>{
+      click('.live-search .results li:eq(0)').then(() => {
+        fillIn(input, 'group');
+        click('span.search-icon', container).then(()=>{
+          click('.live-search .results li:eq(0)').then(()=> {
+            click(find('.bigadd', container));
+          });
+        });
+      });
     });
   });
   andThen(function(){
@@ -259,10 +266,17 @@ test('create new multiday offering', function(assert) {
       fillIn(find('.offering-edit-end-time input', container), '12:23');
       fillIn(find('.offering-edit-room input', container), 'testing palace');
       click('.offering-edit-learner_groups li:eq(0) ul li:eq(0)', container);
-      click('.offering-edit-instructorgroups li:eq(0)', container);
-      fillIn(find('.offering-edit-instructors input', container), '0 guy').then(function(){
-        click(find('.offering-edit-instructors .results li:eq(0)', container));
-        click(find('.bigadd', container));
+      let input = find('.search-box input', container);
+      fillIn(input, 'guy');
+      click('span.search-icon', container).then(()=>{
+        click('.live-search .results li:eq(0)').then(() => {
+          fillIn(input, 'group');
+          click('span.search-icon', container).then(()=>{
+            click('.live-search .results li:eq(0)').then(()=> {
+              click(find('.bigadd', container));
+            });
+          });
+        });
       });
     });
   });
@@ -275,5 +289,47 @@ test('create new multiday offering', function(assert) {
     assert.equal(getElementText(find('.offering-block-time-offering-location', block)), getText('testing palace'));
     assert.equal(getElementText(find('.offering-block-time-offering-learner_groups li', block)), getText('learnergroup0'));
     assert.equal(getElementText(find('.offering-block-time-offering-instructors li', block)), getText('0guyMc0son1guyMc1son2guyMc2son5guyMc5son6guyMc6son'));
+  });
+});
+
+test('confirm removal message', function(assert) {
+  assert.expect(2);
+  visit(url);
+  andThen(function() {
+    let offering = find('.offering-block-time-offering:eq(0)');
+    click('.offering-block-time-offering-actions .remove', offering).then(function(){
+      assert.ok(offering.hasClass('offering-confirm-removal'));
+      assert.equal(getElementText(find('.confirm-message', offering)), getText('Are you sure you want to delete this offering with 2 learner groups? This action cannot be undone. Yes Cancel'));
+    });
+  });
+});
+
+test('remove offering', function(assert) {
+  assert.expect(2);
+  visit(url);
+  andThen(function() {
+    let offerings = find('.offering-block-time-offering');
+    assert.equal(offerings.length, 3);
+    let offering = find('.offering-block-time-offering').eq(0);
+    click('.offering-block-time-offering-actions .remove', offering).then(function(){
+      click('.remove', offering).then(function(){
+        assert.equal(find('.offering-block-time-offering').length, 2);
+      });
+    });
+  });
+});
+
+test('cancel remove offering', function(assert) {
+  assert.expect(2);
+  visit(url);
+  andThen(function() {
+    let offerings = find('.offering-block-time-offering');
+    assert.equal(offerings.length, 3);
+    let offering = find('.offering-block-time-offering').eq(0);
+    click('.offering-block-time-offering-actions .remove', offering).then(function(){
+      click('.cancel', offering).then(function(){
+        assert.equal(find('.offering-block-time-offering').length, 3);
+      });
+    });
   });
 });

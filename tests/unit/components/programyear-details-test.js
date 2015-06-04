@@ -10,7 +10,8 @@ moduleForComponent('programyear-details', {
     'component:programyear-overview',
     'component:programyear-competencies',
     'component:detail-objectives',
-    'component:detail-topics'
+    'component:detail-stewards',
+    'component:detail-topics',
   ]
 });
 

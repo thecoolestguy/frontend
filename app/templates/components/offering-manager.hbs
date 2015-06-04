@@ -38,42 +38,33 @@
       <div>{{input value=room}}</div>
     </div> <br />
     <div class="offering-edit-learner_groups">
-      <label>{{t "learnerGroups.learners"}}:</label>
+      <label>{{t "general.learnerGroups"}}:</label>
       {{learnergroup-selection-manager
         subject=this
         cohorts=cohorts
       }}
     </div> <br />
-    <div class="offering-edit-instructorgroups">
-      <label>{{t "general.instructorGroups"}}:</label>
-      {{instructorgroup-selection-manager
-        subject=this
-        availableInstructorGroups=availableInstructorGroups
-      }}
-    </div> <br />
     <div class="offering-edit-instructors">
       <label>{{t "general.instructors"}}:</label>
-      <span>
-        <ul class='removable-list'>
-          {{#each user in sortedInstructors}}
-          <li {{action 'removeInstructor' user}}>{{user.fullName}}{{fa-icon 'remove' classNames='removex'}}</li>
-          {{/each}}
-        </ul>
-      </span>
-      {{user-search
-        addUser='addInstructor'
-        currentlyActiveUsers=allInstructors
+      {{instructor-selection-manager
+        addInstructor='addInstructorToBuffer'
+        addInstructorGroup='addInstructorGroupToBuffer'
+        removeInstructor='removeInstructorFromBuffer'
+        removeInstructorGroup='removeInstructorGroupFromBuffer'
+        availableInstructorGroups=currentUser.model.primarySchool.instructorGroups
+        instructorGroups=instructorGroupBuffer
+        instructors=instructorBuffer
       }}
     </div>
   </div>
 {{else}}
-  <div class='offering-block-time-offering'>
+  <div class='offering-block-time-offering  {{if showRemoveConfirmation "offering-confirm-removal"}}'>
     <span class='offering-block-time-offering-learner_groups offering-detail-box'>
       <ul>
         {{#each learnerGroup in offering.learnerGroups}}
           <li>{{learnerGroup.title}}</li>
         {{else}}
-          <li>{{fa-icon 'user-plus'}}</li>
+          <li>{{fa-icon 'group'}}</li>
         {{/each}}
       </ul>
     </span>
@@ -87,10 +78,24 @@
         {{/each}}
       </ul>
     </span>
-    <span class='offering-block-time-offering-actions offering-detail-box'>
-      {{#action-menu}}
-        <li {{action 'edit'}}>{{t 'general.edit'}}</li>
-      {{/action-menu}}
-    </span>
+    {{#if editable}}
+      <span class='offering-block-time-offering-actions offering-detail-box'>
+        <span class='clickable' {{action 'edit'}}>{{fa-icon 'edit'}}</span>
+        <span class='clickable remove' {{action 'confirmRemove'}}>{{fa-icon 'trash'}}</span>
+      </span>
+    {{/if}}
+    {{#if showRemoveConfirmation class='vertical'}}
+      <div class='confirm-removal'>
+        <div class='confirm-message'>
+          {{t 'offerings.confirmRemove' learnerGroupCount=offering.learnerGroups.length}} <br />
+          <div class="confirm-buttons">
+            <button {{action 'remove' course}} class='remove text'>{{t 'general.yes'}}</button>
+            <button {{action 'cancelRemove' course}} class='cancel text'>{{t 'general.cancel'}}</button>
+         </div>
+        </div>
+      </div>
+    {{/if}}
   </div>
+
+
 {{/liquid-if}}

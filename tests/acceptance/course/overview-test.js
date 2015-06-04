@@ -9,7 +9,7 @@ import { openDatepicker } from 'ember-pikaday/helpers/pikaday';
 
 var application;
 var fixtures = {};
-var url = '/course/1';
+var url = '/courses/1';
 module('Acceptance: Course - Overview', {
   beforeEach: function() {
     application = startApp();
@@ -142,18 +142,18 @@ test('open and close details', function(assert) {
     assert.equal(currentPath(), 'course.index');
     var details = find('#course-details .detail-view-details');
     assert.equal(find('.detail-title', details).length, 1);
-    click('.detailCollapsedControl', details).then(function(){
+    click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 7);
-      assert.equal(currentURL(), '/course/1?details=true');
+      assert.equal(currentURL(), '/courses/1?details=true');
     });
   });
 
   andThen(function() {
     var details = find('#course-details .detail-view-details');
     assert.equal(find('.detail-title', details).length, 7);
-    click('.detailCollapsedControl', details).then(function(){
+    click('.detail-collapsed-control', details).then(function(){
       assert.equal(find('.detail-title', details).length, 1);
-      assert.equal(currentURL(), '/course/1');
+      assert.equal(currentURL(), '/courses/1');
     });
   });
 });
@@ -239,7 +239,7 @@ test('change end date', function(assert) {
       interactor.selectDate(newDate.toDate());
       click(find('.courseenddate .editinplace .actions .save', container));
       andThen(function(){
-        assert.equal(getElementText(find('.coursestartdate div', container)), newDate.format('MM/DD/YY'));
+        assert.equal(getElementText(find('.courseenddate div', container)), newDate.format('MM/DD/YY'));
       });
 
     });
